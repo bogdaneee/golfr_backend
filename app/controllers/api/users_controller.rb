@@ -26,5 +26,21 @@ module Api
         }
       }.to_json
     end
+
+    def user_name
+      user = User.find_by(id: params[:id])
+
+      if user
+        render json: {
+          name: user.name
+        }.to_json
+      else
+        render json: {
+          errors: [
+            "This user doesn't exist!"
+          ]
+        }, status: :not_found
+      end
+    end
   end
 end
