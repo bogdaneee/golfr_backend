@@ -3,12 +3,12 @@ require 'rails_helper'
 describe Api::ScoresController, type: :request do
   before :each do
     @user1 = create(:user, name: 'User1', email: 'user1@email.com', password: 'userpass')
-    user2 = create(:user, name: 'User2', email: 'user2@email.com', password: 'userpass')
+    @user2 = create(:user, name: 'User2', email: 'user2@email.com', password: 'userpass')
     sign_in(@user1, scope: :user)
 
     @score1 = create(:score, user: @user1, total_score: 79, played_at: '2021-05-20')
-    @score2 = create(:score, user: user2, total_score: 99, played_at: '2021-06-20')
-    @score3 = create(:score, user: user2, total_score: 68, played_at: '2021-06-13')
+    @score2 = create(:score, user: @user2, total_score: 99, played_at: '2021-06-20')
+    @score3 = create(:score, user: @user2, total_score: 68, played_at: '2021-06-13')
   end
 
   describe 'GET feed' do
@@ -102,6 +102,27 @@ describe Api::ScoresController, type: :request do
 
       expect(response).not_to have_http_status(:ok)
       expect(Score.count).to eq score_count
+    end
+  end
+
+  describe 'GET index' do
+    it 'should return all scores for a user' do
+      get :user_scores_asd, params: { id: @user1.id }
+
+      expect(response).to have_http_status(:ok)
+
+      # response_hash = JSON.parse(response.body)
+      # scores = response_hash['scores']
+      #
+      # expect(scores.size).to eq 1
+      #
+      # get api_user_scores_path(@user2.id)
+      #
+      # expect(response).to have_http_status(:ok)
+      # response_hash = JSON.parse(response.body)
+      # scores = response_hash['scores']
+      #
+      # expect(scores.size).to eq 2
     end
   end
 end
