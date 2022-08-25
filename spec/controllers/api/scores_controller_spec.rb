@@ -107,22 +107,13 @@ describe Api::ScoresController, type: :request do
 
   describe 'GET user scores' do
     it 'should return all scores for a user' do
-      get :user_scores, params: { id: @user1.id }
+      get api_path(@user2.id)
 
       expect(response).to have_http_status(:ok)
+      response_hash = JSON.parse(response.body)
+      scores = response_hash['scores']
 
-      # response_hash = JSON.parse(response.body)
-      # scores = response_hash['scores']
-      #
-      # expect(scores.size).to eq 1
-      #
-      # get api_user_scores_path(@user2.id)
-      #
-      # expect(response).to have_http_status(:ok)
-      # response_hash = JSON.parse(response.body)
-      # scores = response_hash['scores']
-      #
-      # expect(scores.size).to eq 2
+      expect(scores.size).to eq 2
     end
   end
 end
