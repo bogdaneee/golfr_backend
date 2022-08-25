@@ -105,9 +105,9 @@ describe Api::ScoresController, type: :request do
     end
   end
 
-  describe 'GET index' do
+  describe 'GET user scores' do
     it 'should return all scores for a user' do
-      get :user_scores_asd, params: { id: @user1.id }
+      get :user_scores, params: { id: @user1.id }
 
       expect(response).to have_http_status(:ok)
 
