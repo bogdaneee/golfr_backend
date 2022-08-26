@@ -24,12 +24,12 @@ describe Api::UsersController, type: :controller do
     end
   end
 
-  describe 'GET name' do
+  describe 'GET index' do
     it 'should return the name if user is logged in' do
       sign_in(@user1)
       id = User.first.id
 
-      get :user_name, params: { id: id }
+      get :index, params: { id: id }
 
       expect(response).to have_http_status(:ok)
       response_hash = JSON.parse(response.body)
@@ -38,7 +38,7 @@ describe Api::UsersController, type: :controller do
 
       id = User.second.id
 
-      get :user_name, params: { id: id }
+      get :index, params: { id: id }
 
       expect(response).to have_http_status(:ok)
       response_hash = JSON.parse(response.body)
@@ -48,7 +48,7 @@ describe Api::UsersController, type: :controller do
   end
 
   it 'should return an error if user is not logged in' do
-    get :user_name, params: { id: @user1.id }
+    get :index, params: { id: @user1.id }
 
     expect(response).not_to have_http_status(:ok)
   end
@@ -56,7 +56,7 @@ describe Api::UsersController, type: :controller do
   it 'should return an error if id is not valid' do
     sign_in(@user1)
 
-    get :user_name, params: { id: 7 }
+    get :index, params: { id: 7 }
 
     expect(response).to have_http_status(:not_found)
   end

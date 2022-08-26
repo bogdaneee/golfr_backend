@@ -114,6 +114,7 @@ describe Api::ScoresController, type: :request do
       scores = response_hash['scores']
 
       expect(scores.size).to eq 2
+      expect(scores[0]['user_name']).to eq 'User2'
     end
   end
 end

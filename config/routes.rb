@@ -5,7 +5,7 @@ Rails.application.routes.draw do
     post 'login', to: 'users#login'
     get 'feed', to: 'scores#user_feed'
     get 'users/:id/scores', to: 'scores#user_scores'
-    get 'users/:id/name', to: 'users#user_name'
+    get 'users/:id', to: 'users#index'
     resources :scores, only: %i[create destroy]
   end
 end
