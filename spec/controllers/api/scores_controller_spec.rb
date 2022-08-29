@@ -31,6 +31,24 @@ describe Api::ScoresController, type: :request do
       expect(scores[1]['number_of_holes']).to eq 9
       expect(scores[2]['total_score']).to eq 79
     end
+
+    it 'should return the most recent 25 scores' do
+      30.times do
+        create(:score, user: @user1, total_score: 69, played_at: '2020-05-20')
+      end
+
+      get api_feed_path
+
+      expect(response).to have_http_status(:ok)
+      response_hash = JSON.parse(response.body)
+      scores = response_hash['scores']
+
+      expect(Score.count).to be > 25
+      expect(scores.size).to eq 25
+      expect(scores[0]['user_name']).to eq 'User2'
+      expect(scores[24]['user_name']).to eq 'User1'
+      expect(scores[24]['total_score']).to eq 69
+    end
   end
 
   describe 'POST create' do
