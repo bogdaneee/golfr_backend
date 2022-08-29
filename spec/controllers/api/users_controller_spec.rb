@@ -3,7 +3,7 @@ require 'rails_helper'
 describe Api::UsersController, type: :controller do
   before :each do
     @user1 = create(:user, name: 'User1', email: 'user1@email.com', password: 'userpass')
-    create(:user, name: 'User2', email: 'user2@email.com', password: 'userpass')
+    @user2 = create(:user, name: 'User2', email: 'user2@email.com', password: 'userpass')
   end
 
   describe 'POST login' do
@@ -24,31 +24,31 @@ describe Api::UsersController, type: :controller do
     end
   end
 
-  describe 'GET index' do
+  describe 'GET show' do
     it 'should return the name if user is logged in' do
       sign_in(@user1)
       id = User.first.id
 
-      get :index, params: { id: id }
+      get :show, params: { id: id }
 
       expect(response).to have_http_status(:ok)
       response_hash = JSON.parse(response.body)
 
-      expect(response_hash['name']).to eq 'User1'
+      expect(response_hash['name']).to eq @user1.name
 
       id = User.second.id
 
-      get :index, params: { id: id }
+      get :show, params: { id: id }
 
       expect(response).to have_http_status(:ok)
       response_hash = JSON.parse(response.body)
 
-      expect(response_hash['name']).to eq 'User2'
+      expect(response_hash['name']).to eq @user2.name
     end
   end
 
   it 'should return an error if user is not logged in' do
-    get :index, params: { id: @user1.id }
+    get :show, params: { id: @user1.id }
 
     expect(response).not_to have_http_status(:ok)
   end
@@ -56,7 +56,7 @@ describe Api::UsersController, type: :controller do
   it 'should return an error if id is not valid' do
     sign_in(@user1)
 
-    get :index, params: { id: 7 }
+    get :show, params: { id: 7 }
 
     expect(response).to have_http_status(:not_found)
   end

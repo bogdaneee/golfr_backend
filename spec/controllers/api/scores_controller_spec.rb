@@ -20,7 +20,7 @@ describe Api::ScoresController, type: :request do
       scores = response_hash['scores']
 
       expect(scores.size).to eq 3
-      expect(scores[0]['user_name']).to eq 'User2'
+      expect(scores[0]['user_name']).to eq @user2.name
       expect(scores[0]['total_score']).to eq 99
       expect(scores[0]['played_at']).to eq '2021-06-20'
       expect(scores[1]['total_score']).to eq 68
@@ -39,7 +39,7 @@ describe Api::ScoresController, type: :request do
       response_hash = JSON.parse(response.body)
 
       score_hash = response_hash['score']
-      expect(score_hash['user_name']).to eq 'User1'
+      expect(score_hash['user_name']).to eq @user1.name
       expect(score_hash['total_score']).to eq 79
       expect(score_hash['played_at']).to eq '2021-06-29'
 
@@ -79,7 +79,7 @@ describe Api::ScoresController, type: :request do
       response_hash = JSON.parse(response.body)
 
       score_hash = response_hash['score']
-      expect(score_hash['user_name']).to eq 'User1'
+      expect(score_hash['user_name']).to eq @user1.name
       expect(score_hash['total_score']).to eq 79
       expect(score_hash['played_at']).to eq '2021-05-20'
     end
@@ -114,7 +114,7 @@ describe Api::ScoresController, type: :request do
       scores = response_hash['scores']
 
       expect(scores.size).to eq 2
-      expect(scores[0]['user_name']).to eq 'User2'
+      expect(scores[0]['user_name']).to eq @user2.name
     end
   end
 end
