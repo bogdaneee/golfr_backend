@@ -8,9 +8,9 @@ describe Api::ScoresController, type: :request do
 
     @score1 = create(:score, user: @user1, total_score: 79, played_at: '2021-05-20',
                              number_of_holes: 9)
-    @score2 = create(:score, user: user2, total_score: 99, played_at: '2021-06-20',
+    @score2 = create(:score, user: @user2, total_score: 99, played_at: '2021-06-20',
                              number_of_holes: 18)
-    @score3 = create(:score, user: user2, total_score: 68, played_at: '2021-06-13',
+    @score3 = create(:score, user: @user2, total_score: 68, played_at: '2021-06-13',
                              number_of_holes: 9)
   end
 
